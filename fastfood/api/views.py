@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import generics
-from .models import Category, Food, Order
-from .serializers import CategorySerializer, FoodSerializer, OrderSerializer
+from .models import Category, FastFood, Order
+from .serializers import CategorySerializer, FastFoodSerializer, OrderSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 def home(request):
@@ -15,8 +15,8 @@ class CategoryListCreate(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 class FoodListCreate(generics.ListCreateAPIView):
-    queryset = Food.objects.all()
-    serializer_class = FoodSerializer
+    queryset = FastFood.objects.all()
+    serializer_class = FastFoodSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 class OrderListCreate(generics.ListCreateAPIView):
@@ -25,4 +25,18 @@ class OrderListCreate(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
+from rest_framework import generics
+from .models import FastFood
+from .serializers import FastFoodSerializer
+from .permissions import IsAdminOrReadOnly
+
+class FastFoodListCreateView(generics.ListCreateAPIView):
+    queryset = FastFood.objects.all()
+    serializer_class = FastFoodSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+class FastFoodDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FastFood.objects.all()
+    serializer_class = FastFoodSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
