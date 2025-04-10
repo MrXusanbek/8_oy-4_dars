@@ -4,6 +4,7 @@ from rest_framework import generics
 from .models import Category, FastFood, Order
 from .serializers import CategorySerializer, FastFoodSerializer, OrderSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .permissions import IsAdminOrReadOnly
 
 def home(request):
     return HttpResponse("<h1>Welcome to the FastFood API</h1><p>Visit <a href='/api/'>API Endpoints</a></p>")
@@ -24,11 +25,6 @@ class OrderListCreate(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-
-from rest_framework import generics
-from .models import FastFood
-from .serializers import FastFoodSerializer
-from .permissions import IsAdminOrReadOnly
 
 class FastFoodListCreateView(generics.ListCreateAPIView):
     queryset = FastFood.objects.all()
