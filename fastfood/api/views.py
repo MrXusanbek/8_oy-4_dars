@@ -5,6 +5,7 @@ from .models import Category, FastFood, Order
 from .serializers import CategorySerializer, FastFoodSerializer, OrderSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .permissions import IsAdminOrReadOnly
+from rest_framework.throttling import UserRateThrottle
 
 def home(request):
     return HttpResponse("<h1>Welcome to the FastFood API</h1><p>Visit <a href='/api/'>API Endpoints</a></p>")
@@ -35,4 +36,12 @@ class FastFoodDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = FastFood.objects.all()
     serializer_class = FastFoodSerializer
     permission_classes = [IsAdminOrReadOnly]
+
+
+class CustomFastFoodThrottle(UserRateThrottle):
+    rate = '3/minute'
+
+class FastFoodListCreateView(generics.ListCreateAPIView):
+    ...
+    throttle_classes = [CustomFastFoodThrottle]
 

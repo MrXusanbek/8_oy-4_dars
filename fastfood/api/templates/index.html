@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FastFood API AJAX</title>
+</head>
+<body>
+    <h1>FastFood API Test</h1>
+    <script>
+        fetch("http://127.0.0.1:8000/api/fastfood/")
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error("Xatolik:", error));
+    </script>
+</body>
+</html>
